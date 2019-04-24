@@ -15,13 +15,14 @@ before_install:
   - Rscript -e 'update.packages(ask = FALSE)';
   - rcode="tfile <- tempfile(); capture.output(res<-devtools::test(), file = tfile); out <- readLines(tfile); cat(out, sep = '\n'); "
   - rcode+="n.fail <- as.numeric(sub('Failed:[[:space:]]', '', out[grep('Failed:[[:space:]]', out)])); "
-  - rcode+="vapply(res, typeof, ''); "
-  - rcode+="write.csv(as.data.frame(res), file='test_results.csv'); "
+  - rcode+="res <- as.data.frame(res); for(i in ncol(res)) res[[i]] <- as.character(res[[i]]); "
+  - rcode+="write.csv(res, file='test_results.csv'); "
+  - rcode+="test <- read.csv('test_results.csv', header = TRUE); print(which(test$warnings > 0)); "
   - rcode+="quit(status = !identical(n.fail, 0), save='no');"
 
 r_packages:
   - devtools
-#  - roxygen2
+#   - roxygen2
 #  - covr
 
 r_github_packages:
