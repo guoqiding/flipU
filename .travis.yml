@@ -18,7 +18,7 @@ before_install:
   - rcode+="chgType <- function(x){ x <- as.character(x); if (!anyNA(suppressWarnings(as.numeric(x)))){ as.numeric(x) }else x }; "
   - rcode+="res <- as.data.frame(res); for(i in ncol(res)){ res[[i]] <- chgType(res[[i]]) }; "
   - rcode+="write.csv(res, file='test_results.csv'); "
-  - rcode+="test <- read.csv('test_results.csv', header = TRUE); print(which(test$warnings > 0)); "
+  - rcode+="test <- read.csv('test_results.csv', header = TRUE); print(head(test)); print(class(test$warning)); print(which(test$warning > 0)); "
   - rcode+="quit(status = !identical(n.fail, 0), save='no');"
 
 r_packages:
