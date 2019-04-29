@@ -15,8 +15,7 @@ before_install:
   - Rscript -e 'update.packages(ask = FALSE)';
   - rcode="tfile <- tempfile(); capture.output(res<-devtools::test(), file = tfile); out <- readLines(tfile); cat(out, sep = '\n'); "
   - rcode+="n.fail <- as.numeric(sub('Failed:[[:space:]]', '', out[grep('Failed:[[:space:]]', out)])); "
-  - rcode+="chgType <- function(x){ x <- as.character(x); if (!anyNA(suppressWarnings(as.numeric(x)))){ as.numeric(x) }else x }; "
-  - rcode+="library(devtools); res <- as.data.frame(res); f <- as.character(res[['file']]); str(res[['warning']]); w <- as.numeric(as.character(res[['warning']])); print(head(w)); out <- data.frame(file = f, warning = w); "
+  - rcode+="res <- as.data.frame(res); out <- data.frame(file = unlist(res[['file']]), warning = unlist(res[['warning']])); "
   - rcode+="write.csv(out, file='test_results.csv'); "
   - rcode+="test <- read.csv('test_results.csv', header = TRUE); cat('head(test)\n'); print(head(test)); print(which(test[['warning']] > 0)); "
   - rcode+="quit(status = !identical(n.fail, 0), save='no');"
