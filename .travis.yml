@@ -16,7 +16,7 @@ before_install:
   - rcode="tfile <- tempfile(); capture.output(res<-devtools::test(), file = tfile); out <- readLines(tfile); cat(out, sep = '\n'); "
   - rcode+="n.fail <- as.numeric(sub('Failed:[[:space:]]', '', out[grep('Failed:[[:space:]]', out)])); "
   - rcode+="chgType <- function(x){ if (any(is.na(suppressWarnings(as.numeric(x))))){ as.character(x) }else as.numeric(x) }; "
-  - rcode+="res <- as.data.frame(res); for(i in ncol(res)){ res[[i]] <- chgType(res[[i]]); "
+  - rcode+="res <- as.data.frame(res); for(i in ncol(res)){ res[[i]] <- chgType(res[[i]]) }; "
   - rcode+="write.csv(res, file='test_results.csv'); "
   - rcode+="test <- read.csv('test_results.csv', header = TRUE); print(which(test$warnings > 0)); "
   - rcode+="quit(status = !identical(n.fail, 0), save='no');"
