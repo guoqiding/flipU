@@ -18,7 +18,7 @@ ConvertCommaSeparatedStringToVector <- function(string, split = ",",
 {
     # Substitute smart quotes for normal quotes
     patt <- if ("UTF-8" %in% localeToCharset())      '[\u201C\u201D\u201E]'        # linux (utf-8 encoding)
-            else if ("cp936" %in% localeToCharset()) '[\x201C\x201D\x201E]'        # windows (cp936)
+            else if ("CP936" %in% localeToCharset()) '[\x201C\x201D\x201E]'        # windows (cp936)
             else                                     '[\x93\x94\x84]'              # windows (latin-1)
     string <- gsub(patt, "\"", string)
 
